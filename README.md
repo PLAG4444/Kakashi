@@ -1,12 +1,11 @@
-<h1 align="center">✨ Kitagawa Bot - WhatsApp Ninja MultiFuncional</h1>
+<h1 align="center">💗 𝗞𝗶𝘁𝗮𝗴𝗮𝘄𝗮 𝗕𝗼𝘁 💗</h1>
 
 <p align="center">
   <img src="https://qu.ax/HioNU.jpg" width="80%">
 </p>
 
 <p align="center">
-  Un bot de WhatsApp con poderes ninja, sistema premium, comandos SMM y más.
-</p>
+  ʜᴏʟᴀ ǫᴜᴇʀɪᴅᴏs ᴜsᴜᴀʀɪᴏs ᴅᴇ ᴋɪᴛᴀɢᴀᴡᴀ ʙᴏᴛ, ᴇsᴛᴀᴍᴏs ᴅᴇsᴀʀʀᴏʟʟᴀɴᴅᴏ ᴇsᴛᴇ ʙᴏᴛ ᴘᴀʀᴀ ʟᴏs ᴜsᴜᴀʀɪᴏs ǫᴜᴇ ǫᴜɪᴇʀᴇɴ ᴜɴ ʙᴏᴛ ᴇɴ sᴜs ɢʀᴜᴘᴏs ᴅᴇ ᴡʜᴀᴛsᴀᴘᴘ, ᴋɪᴛᴀɢᴀᴡᴀ ᴇs ᴜɴ ʙᴏᴛ ᴇsᴛɪʟᴏ ᴄᴀsᴇ ᴅᴇsᴀʀʀᴏʟʟᴀᴅᴏ ᴄᴏɴ ʟᴏs ᴍᴇᴊᴏʀᴇs ᴅᴇsᴀʀʀᴏʟʟᴀᴅᴏʀᴇs, ᴋɪᴛᴀɢᴀᴡᴀ ʙᴏᴛ ᴛᴏᴅᴏs ʟᴏs ᴅɪᴀs ᴄᴜᴇɴᴛᴀ ᴄᴏɴ ᴍᴀɴᴛᴇɴɪᴍɪᴇɴᴛᴏ ʏ ᴅᴇsᴀʀᴏʟʟᴏ ᴅᴇ ɴᴜᴇᴠᴏs ᴄᴏᴍᴀᴍᴅᴏs....</p>
 
 <p align="center">
   <a href="https://Wa.me/5649337420"><img src="https://img.shields.io/badge/WhatsApp-Kitagawa-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" /></a>
@@ -17,54 +16,21 @@
 
 ---
 
-## 🌀 Características
+## 🌀 Características 🌀
 
-- Sistema ninja: Niveles, misiones, evolución  
-- Integración con Stripe y Pagar.me  
-- Antidelete y control de grupos  
-- Checker de tarjetas híbrido  
-- Comandos multimedia, estilo anime  
-- Sistema Premium fácil de administrar  
+
+- 𝐂𝐨𝐦𝐚𝐧𝐝𝐨𝐬 𝐝𝐢𝐬𝐩𝐨𝐧𝐢𝐛𝐥𝐞𝐬 𝐞𝐧 𝐊𝐢𝐭𝐚𝐠𝐚𝐰𝐚 𝐁𝐨𝐭. 
+- ᴄᴏᴍᴀɴᴅᴏs ʀᴘɢ
+- ᴀᴅᴍɪɴɪsᴛʀᴀᴄɪᴏ́ɴ ᴅᴇ ɢʀᴜᴘᴏs
+- ᴄᴏᴍᴀɴᴅᴏs ᴅᴇ ᴅᴇsᴄᴀʀɢᴀs
+- ᴄᴏᴍᴀɴᴅᴏs ᴅᴇ ᴊᴜᴇɢᴏs 
+- ᴄᴏᴍᴀɴᴅᴏs ᴅᴇ sᴛɪᴄᴋᴇʀs
+- ᴄᴏᴍᴀɴᴅᴏs ʙɪɴɴɪɴɢ
+- ᴄᴏᴍᴀɴᴅᴏs ʟɪɴᴋs ᴠɪx ᴘʀᴇᴍɪᴜᴍ
 
 ---
 
 ## ⚙️ Instalación
 
-```bash
-termux-setup-storage
-
-cd /storage/emulated/0/Valessita-Bot/
-
-pkg install git
-
-pkg update
- 
-pkg upgrade
-
-pkg install ffmpeg
-
-pkg install wget
-
-pkg install nodejs
-
-pkg install nodejs-22
-
-node -v
-
-pkg install npm
-
-pkg install yarn
-
-pkg install python
-
-pip install -U yt-dlp
-
-node index
-
-git clone https://github.com/tuusuario/kitagawa-bot
-
-cd kitagawa-bot
-
-npm install
-
-node index.js
+- 𝐃𝐞𝐬𝐚𝐫𝐫𝐨𝐥𝐥𝐚𝐝𝐨𝐫: @ʙʏ ᴋᴀᴋᴀsʜɪ
+- 𝐂𝐨𝐧𝐭𝐚𝐜𝐭𝐨: +52 564 933 7420
