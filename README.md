@@ -1,29 +1,37 @@
-<h1 align="center">🤖 MiBot Naruto - WhatsApp MultiFuncional</h1>
+<h1 align="center">✨ Kitagawa Bot - WhatsApp Ninja MultiFuncional</h1>
 
 <p align="center">
-  Bot de WhatsApp con sistema ninja, comandos premium, antidelete, integración con APIs SMM, y mucho más.
-  <br>
-  <img src="https://img.shields.io/badge/Bot-Naruto-orange?style=flat-square">
-  <img src="https://img.shields.io/github/stars/tuusuario/mibot?style=social">
+  <img src="https://via.placeholder.com/600x250.png?text=KITAGAWA+BOT" width="80%">
+</p>
+
+<p align="center">
+  Un bot de WhatsApp con poderes ninja, sistema premium, comandos SMM y más.
+</p>
+
+<p align="center">
+  <a href="https://wa.me/1234567890"><img src="https://img.shields.io/badge/WhatsApp-Kitagawa-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" /></a>
+  <a href="https://facebook.com/tuusuario"><img src="https://img.shields.io/badge/Facebook-Kitagawa-1877F2?style=for-the-badge&logo=facebook&logoColor=white" /></a>
+  <a href="https://instagram.com/tuusuario"><img src="https://img.shields.io/badge/Instagram-Kitagawa-E4405F?style=for-the-badge&logo=instagram&logoColor=white" /></a>
+  <a href="https://t.me/tuusuario"><img src="https://img.shields.io/badge/Telegram-Kitagawa-0088cc?style=for-the-badge&logo=telegram&logoColor=white" /></a>
 </p>
 
 ---
 
-## 🌀 Características Principales
+## 🌀 Características
 
-- Sistema de juego estilo Naruto con niveles y misiones  
-- Integración con Stripe y Pagar.me para checkers de tarjetas  
-- Comandos de media, sticker, audio, etc.  
-- Antidelete (recupera mensajes eliminados)  
-- Sistema Premium por tiempo o manual  
-- Auto-respuestas con estilo de personaje  
+- Sistema ninja: Niveles, misiones, evolución  
+- Integración con Stripe y Pagar.me  
+- Antidelete y control de grupos  
+- Checker de tarjetas híbrido  
+- Comandos multimedia, estilo anime  
+- Sistema Premium fácil de administrar  
 
 ---
 
-## ⚙️ Instalación Rápida
+## ⚙️ Instalación
 
 ```bash
-git clone https://github.com/tuusuario/mibot
-cd mibot
+git clone https://github.com/tuusuario/kitagawa-bot
+cd kitagawa-bot
 npm install
 node index.js
