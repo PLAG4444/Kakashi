@@ -1,16 +1,18 @@
 <h1 align="center">💗 𝗞𝗶𝘁𝗮𝗴𝗮𝘄𝗮 💗</h1>
-<h1 align="center">𝗕𝗼𝘁</h1>
+
 
 <p align="center">
   <img src="https://qu.ax/HioNU.jpg" width="80%">
 </p>
 
 <p align="center">
-🍒 𝑯𝒐𝒍𝒂 𝒒𝒖𝒆𝒓𝒊𝒅𝒐𝒔 𝒖𝒔𝒖𝒂𝒓𝒊𝒐𝒔 𝒅𝒆 𝑲𝒊𝒕𝒂𝒈𝒂𝒘𝒂 𝑩𝒐𝒕.
+🍒 𝐇𝐨𝐥𝐚 𝐁𝐢𝐞𝐧𝐯𝐞𝐧𝐢𝐝𝐨𝐬 🍒
  
  - 🎀 ᴇsᴛᴀᴍᴏs ᴅᴇsᴀʀʀᴏʟʟᴀɴᴅᴏ ᴇsᴛᴇ ʙᴏᴛ ᴘᴀʀᴀ ʟᴏs ᴜsᴜᴀʀɪᴏs ǫᴜᴇ ǫᴜɪᴇʀᴇɴ ᴜɴ ʙᴏᴛ ᴇɴ sᴜs ɢʀᴜᴘᴏs ᴅᴇ ᴡʜᴀᴛsᴀᴘᴘ
  - 🎀 ᴋɪᴛᴀɢᴀᴡᴀ ᴇs ᴜɴ ʙᴏᴛ ᴇsᴛɪʟᴏ ᴄᴀsᴇ ᴅᴇsᴀʀʀᴏʟʟᴀᴅᴏ ᴄᴏɴ ʟᴏs ᴍᴇᴊᴏʀᴇs ᴅᴇsᴀʀʀᴏʟʟᴀᴅᴏʀᴇs.
- - 🎀 ᴋɪᴛᴀɢᴀᴡᴀ ʙᴏᴛ ᴛᴏᴅᴏs ʟᴏs ᴅɪᴀs ᴄᴜᴇɴᴛᴀ ᴄᴏɴ ᴍᴀɴᴛᴇɴɪᴍɪᴇɴᴛᴏ ʏ ᴅᴇsᴀʀᴏʟʟᴏ ᴅᴇ ɴᴜᴇᴠᴏs ᴄᴏᴍᴀɴᴅᴏs, sɪ ǫᴜɪᴇʀᴇs ᴘʀᴏʙᴀʀ ᴀ ᴋɪᴛᴀɢᴀᴡᴀ ʙᴏᴛ ɢʀᴀᴛɪs ᴜɴᴇᴛᴇ ᴀʟ ɢʀᴜᴘᴏ ᴅᴇ ᴡʜᴀᴛsᴀᴘᴘ.</p>
+ - 🎀 ᴋɪᴛᴀɢᴀᴡᴀ ʙᴏᴛ ᴛᴏᴅᴏs ʟᴏs ᴅɪᴀs ᴄᴜᴇɴᴛᴀ ᴄᴏɴ ᴍᴀɴᴛᴇɴɪᴍɪᴇɴᴛᴏ.
+ - 🎀 ᴅᴇsᴀʀᴏʟʟᴏ ᴄᴏᴍᴀɴᴅᴏs ɴᴜᴇᴠᴏs ᴛᴏᴅᴏs ʟᴏs ᴅɪᴀs.
+ - 🎀 sɪ ǫᴜɪᴇʀᴇs ᴘʀᴏʙᴀʀ ᴀ ᴋɪᴛᴀɢᴀᴡᴀ ʙᴏᴛ ɢʀᴀᴛɪs ᴜɴᴇᴛᴇ ᴀʟ ɢʀᴜᴘᴏ ᴅᴇ ᴡʜᴀᴛsᴀᴘᴘ.</p>
 
 <p align="center">
   <a href="https://chat.whatsapp.com/CHRr2oXifFgHUcM0quJEKi"><img src="https://img.shields.io/badge/WhatsApp-Kitagawa-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" /></a>
