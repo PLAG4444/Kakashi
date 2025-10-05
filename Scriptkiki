@@ -1,0 +1,353 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local player = Players.LocalPlayer
+local mouse = player:GetMouse()
+
+-- RemoteEvent (create en ReplicatedStorage named "FXKakashi_Remote")
+local remote = ReplicatedStorage:WaitForChild("FXKakashi_Remote")
+
+-- Guardar estados y valores originales
+local savedCFrame = nil
+local flying = false
+local noclip = false
+local espEnabled = false
+local origWalkSpeed, origJumpPower
+local humanoid = nil
+local bodyVelocity, bodyGyro
+
+-- Helper: obtén character y humanoid actualizado
+local function updateCharacter()
+    local char = player.Character or player.CharacterAdded:Wait()
+    humanoid = char:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        origWalkSpeed = origWalkSpeed or humanoid.WalkSpeed
+        origJumpPower = origJumpPower or humanoid.JumpPower or humanoid.JumpHeight -- JumpPower property in newer R15
+    end
+    return char
+end
+player.CharacterAdded:Connect(function()
+    updateCharacter()
+end)
+updateCharacter()
+
+-- UI Creation (crea una GUI minimalista)
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "FXKakashi_GUI"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 220, 0, 280)
+mainFrame.Position = UDim2.new(0, 20, 0, 80)
+mainFrame.BackgroundTransparency = 0.15
+mainFrame.BackgroundColor3 = Color3.fromRGB(15,15,15)
+mainFrame.BorderSizePixel = 0
+mainFrame.Parent = screenGui
+mainFrame.ZIndex = 2
+mainFrame.Name = "FXKakashiMain"
+
+local title = Instance.new("TextLabel", mainFrame)
+title.Size = UDim2.new(1, 0, 0, 32)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "FX Kakashi"
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 20
+title.TextColor3 = Color3.fromRGB(255,255,255)
+
+local function makeButton(text, y)
+    local b = Instance.new("TextButton", mainFrame)
+    b.Size = UDim2.new(1, -16, 0, 34)
+    b.Position = UDim2.new(0, 8, 0, 36 + (y-1)*40)
+    b.Text = text
+    b.Font = Enum.Font.SourceSans
+    b.TextSize = 18
+    b.BackgroundTransparency = 0.1
+    b.TextColor3 = Color3.fromRGB(230,230,230)
+    b.BorderSizePixel = 0
+    return b
+end
+
+local btnSaveTP = makeButton("TP: Guardar ubicación", 1)
+local btnGotoTP = makeButton("TP: Ir a guardado", 2)
+local btnFly = makeButton("Vol: Toggle Volar", 3)
+local btnESP = makeButton("Esp: Mostrar players", 4)
+local btnNoclip = makeButton("Trasp: Toggle Traspasar", 5)
+local btnJump = makeButton("Jump: Toggle x2 salto", 6)
+local btnSpeed = makeButton("Speed: Toggle x2 correr", 7)
+
+-- FEEDBACK label
+local statusLabel = Instance.new("TextLabel", mainFrame)
+statusLabel.Size = UDim2.new(1, -16, 0, 40)
+statusLabel.Position = UDim2.new(0, 8, 1, -48)
+statusLabel.BackgroundTransparency = 1
+statusLabel.Text = "Estado: listo"
+statusLabel.TextColor3 = Color3.fromRGB(200,200,200)
+statusLabel.Font = Enum.Font.SourceSansItalic
+statusLabel.TextSize = 14
+statusLabel.TextWrapped = true
+
+local function setStatus(t)
+    statusLabel.Text = "Estado: "..t
+end
+
+-- TP guardar ubicación
+btnSaveTP.MouseButton1Click:Connect(function()
+    local char = updateCharacter()
+    local hrp = char:FindFirstChild("HumanoidRootPart")
+    if hrp then
+        savedCFrame = hrp.CFrame
+        setStatus("Ubicación guardada.")
+    else
+        setStatus("No se encontró HumanoidRootPart.")
+    end
+end)
+
+-- TP ir (se invoca al servidor para mayor seguridad)
+btnGotoTP.MouseButton1Click:Connect(function()
+    if not savedCFrame then
+        setStatus("Primero guarda una ubicación (TP: Guardar).")
+        return
+    end
+    -- Enviar petición al servidor para teleport
+    remote:FireServer("TeleportTo", savedCFrame)
+    setStatus("Solicitud de teleport enviada.")
+end)
+
+-- Fly implementation (cliente)
+local flySpeed = 80
+local ascend = 0 -- -1 down, 0 none, 1 up
+local flyDir = Vector3.new(0,0,0)
+
+local function enableFly()
+    local char = updateCharacter()
+    local hrp = char:FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
+    bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.MaxForce = Vector3.new(1e5,1e5,1e5)
+    bodyVelocity.Velocity = Vector3.new(0,0,0)
+    bodyVelocity.Parent = hrp
+
+    bodyGyro = Instance.new("BodyGyro")
+    bodyGyro.MaxTorque = Vector3.new(1e5,1e5,1e5)
+    bodyGyro.Parent = hrp
+
+    flying = true
+    setStatus("Volar activado.")
+end
+
+local function disableFly()
+    if bodyVelocity then bodyVelocity:Destroy(); bodyVelocity = nil end
+    if bodyGyro then bodyGyro:Destroy(); bodyGyro = nil end
+    flying = false
+    setStatus("Volar desactivado.")
+end
+
+-- Control de entradas para volar
+local keysDown = {}
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.UserInputType == Enum.UserInputType.Keyboard then
+        keysDown[input.KeyCode] = true
+        if input.KeyCode == Enum.KeyCode.Space then ascend = 1 end
+        if input.KeyCode == Enum.KeyCode.LeftShift then ascend = -1 end
+    end
+end)
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.Keyboard then
+        keysDown[input.KeyCode] = false
+        if input.KeyCode == Enum.KeyCode.Space and ascend == 1 then ascend = 0 end
+        if input.KeyCode == Enum.KeyCode.LeftShift and ascend == -1 then ascend = 0 end
+    end
+end)
+
+-- Actualizar movimiento de vuelo
+RunService.RenderStepped:Connect(function(dt)
+    if flying and bodyVelocity and bodyGyro and player.Character then
+        local cam = workspace.CurrentCamera
+        local moveVec = Vector3.new(0,0,0)
+        if keysDown[Enum.KeyCode.W] then moveVec = moveVec + (cam.CFrame.lookVector) end
+        if keysDown[Enum.KeyCode.S] then moveVec = moveVec - (cam.CFrame.lookVector) end
+        if keysDown[Enum.KeyCode.A] then moveVec = moveVec - (cam.CFrame.rightVector) end
+        if keysDown[Enum.KeyCode.D] then moveVec = moveVec + (cam.CFrame.rightVector) end
+
+        local vertical = 0
+        if ascend == 1 then vertical = 1 elseif ascend == -1 then vertical = -1 end
+
+        local finalVel = (moveVec.Unit ~= moveVec.Unit and Vector3.new(0,0,0) or moveVec.Unit) * flySpeed
+        finalVel = Vector3.new(finalVel.X, vertical * flySpeed, finalVel.Z)
+        bodyVelocity.Velocity = finalVel
+        bodyGyro.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.p, workspace.CurrentCamera.CFrame.p + workspace.CurrentCamera.CFrame.lookVector)
+    end
+
+    -- Noclip loop
+    if noclip and player.Character then
+        for _,part in pairs(player.Character:GetDescendants()) do
+            if part:IsA("BasePart") and part.CanCollide == true then
+                part.CanCollide = false
+            end
+        end
+    end
+end)
+
+btnFly.MouseButton1Click:Connect(function()
+    if not flying then
+        enableFly()
+    else
+        disableFly()
+    end
+end)
+
+-- ESP: agrega BillboardGui con nombre sobre la cabeza de cada player
+local espGuis = {}
+
+local function addESPToCharacter(otherChar, playerName)
+    if not otherChar then return end
+    local head = otherChar:FindFirstChild("Head")
+    if not head then return end
+    if espGuis[otherChar] then return end
+
+    local bill = Instance.new("BillboardGui")
+    bill.Adornee = head
+    bill.Size = UDim2.new(0,120,0,30)
+    bill.AlwaysOnTop = true
+    bill.Parent = head
+
+    local label = Instance.new("TextLabel", bill)
+    label.Size = UDim2.new(1,0,1,0)
+    label.BackgroundTransparency = 1
+    label.Text = playerName
+    label.Font = Enum.Font.SourceSansBold
+    label.TextSize = 16
+    label.TextColor3 = Color3.fromRGB(255,255,255)
+
+    espGuis[otherChar] = bill
+end
+
+local function removeESPFromCharacter(otherChar)
+    local g = espGuis[otherChar]
+    if g and g.Parent then g:Destroy() end
+    espGuis[otherChar] = nil
+end
+
+local function toggleESP()
+    espEnabled = not espEnabled
+    if espEnabled then
+        -- agregar a todos los players
+        for _,p in pairs(Players:GetPlayers()) do
+            if p ~= player and p.Character then
+                addESPToCharacter(p.Character, p.Name)
+            end
+        end
+        setStatus("ESP activado.")
+    else
+        for ch,_ in pairs(espGuis) do
+            removeESPFromCharacter(ch)
+        end
+        setStatus("ESP desactivado.")
+    end
+end
+
+-- Conectar cambios de characters para ESP
+Players.PlayerAdded:Connect(function(p)
+    p.CharacterAdded:Connect(function(ch)
+        if espEnabled and p ~= player then
+            addESPToCharacter(ch, p.Name)
+        end
+    end)
+end)
+for _,p in pairs(Players:GetPlayers()) do
+    if p ~= player and p.Character and espEnabled then
+        addESPToCharacter(p.Character, p.Name)
+    end
+end
+
+btnESP.MouseButton1Click:Connect(function()
+    toggleESP()
+end)
+
+-- Noclip (traspasar) toggle
+btnNoclip.MouseButton1Click:Connect(function()
+    noclip = not noclip
+    if noclip then
+        setStatus("Traspasar activado (noclip).")
+    else
+        setStatus("Traspasar desactivado.")
+    end
+end)
+
+-- Jump x2 toggle (ajusta JumpPower o JumpHeight)
+local jumpToggled = false
+btnJump.MouseButton1Click:Connect(function()
+    if not player.Character then updateCharacter() end
+    if not humanoid then updateCharacter() end
+    if not humanoid then setStatus("Humanoid no encontrado."); return end
+
+    if not jumpToggled then
+        -- duplicar jump power (si JumpPower existe, sino ajustar JumpHeight ratio)
+        if humanoid:IsA("Humanoid") then
+            if humanoid:FindFirstChild("JumpPower") then
+                humanoid.JumpPower = (origJumpPower or 50) * 2
+            else
+                -- si use JumpHeight instead, ajustamos JumpHeight aproximadamente
+                humanoid.JumpHeight = (humanoid.JumpHeight or 7.2) * 2
+            end
+        end
+        jumpToggled = true
+        setStatus("Jump x2 activado.")
+    else
+        -- restaurar
+        if humanoid:FindFirstChild("JumpPower") then
+            humanoid.JumpPower = origJumpPower or 50
+        else
+            humanoid.JumpHeight = humanoid.JumpHeight / 2
+        end
+        jumpToggled = false
+        setStatus("Jump x2 desactivado.")
+    end
+end)
+
+-- Speed x2 toggle
+local speedToggled = false
+btnSpeed.MouseButton1Click:Connect(function()
+    if not player.Character then updateCharacter() end
+    if not humanoid then updateCharacter() end
+    if not humanoid then setStatus("Humanoid no encontrado."); return end
+    if not speedToggled then
+        origWalkSpeed = origWalkSpeed or humanoid.WalkSpeed
+        humanoid.WalkSpeed = (origWalkSpeed or 16) * 2
+        speedToggled = true
+        setStatus("Speed x2 activado.")
+    else
+        humanoid.WalkSpeed = origWalkSpeed or 16
+        speedToggled = false
+        setStatus("Speed x2 desactivado.")
+    end
+end)
+
+-- Limpieza: cuando el character cambia, restaurar algunos valores
+player.CharacterRemoving:Connect(function()
+    disableFly()
+    -- restaurar WalkSpeed y Jump
+    if humanoid then
+        humanoid.WalkSpeed = origWalkSpeed or humanoid.WalkSpeed
+        if humanoid:FindFirstChild("JumpPower") then
+            humanoid.JumpPower = origJumpPower or humanoid.JumpPower
+        end
+    end
+end)
+
+-- RemoteEvent respuesta (ejemplo: el servidor puede contestar)
+remote.OnClientEvent:Connect(function(action, ...)
+    -- En este hub no necesitamos acciones cliente->servidor responses ahora
+    -- Pero podemos recibir confirmaciones del servidor
+    if action == "Teleported" then
+        setStatus("Teleport realizado por servidor.")
+    end
+end)
+
+-- Indicaciones de uso
+setStatus("FX Kakashi cargado. Usa los botones (WASD + Space/Shift para volar).")
